@@ -3,15 +3,14 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main 
-
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Deploy to VPS
+    - uses: actions/checkout@v2 
+
+    - name: Deploy frontend
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -23,5 +22,5 @@ jobs:
           npm install
           npm run build
           sudo rm -rf /var/www/cicd/*
-          sudo mkdir /var/www/cicd/client
+          sudo mkdir -p /var/www/cicd/client
           sudo cp -r dist/* /var/www/cicd/client
