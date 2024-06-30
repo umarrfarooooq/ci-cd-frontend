@@ -1,0 +1,26 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2 
+
+    - name: Deploy frontend
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /home/umar/frontend
+          git pull origin main
+          npm install
+          npm run build
+          rm -rf /var/www/cicd/*
+          mkdir -p /var/www/cicd/client
+          cp -r dist/* /var/www/cicd/client
