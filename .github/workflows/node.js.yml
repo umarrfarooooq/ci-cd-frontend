@@ -1,5 +1,4 @@
 name: Deploy to VPS
-
 on:
   push:
     branches:
@@ -9,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 
-
     - name: Deploy frontend
       uses: appleboy/ssh-action@master
       with:
@@ -19,9 +17,10 @@ jobs:
         script: |
           cd /home/umar/frontend
           git remote set-url origin git@github.com:umarrfarooooq/ci-cd-frontend.git
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
           git pull origin main
           npm install
           npm run build
-          rm -rf /var/www/cicd/*
-          mkdir -p /var/www/cicd/client
-          cp -r dist/* /var/www/cicd/client
+          sudo rm -rf /var/www/cicd/*
+          sudo mkdir -p /var/www/cicd/client
+          sudo cp -r dist/* /var/www/cicd/client
