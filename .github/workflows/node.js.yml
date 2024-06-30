@@ -21,6 +21,6 @@ jobs:
           git pull origin main
           npm install
           npm run build
-          sudo rm -rf /var/www/cicd/*
-          sudo mkdir -p /var/www/cicd/client
-          sudo cp -r dist/* /var/www/cicd/client
+          rm -rf /var/www/cicd/*
+          mkdir -p /var/www/cicd/client
+          cp -r dist/* /var/www/cicd/client
