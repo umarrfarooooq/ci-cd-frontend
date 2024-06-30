@@ -18,6 +18,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/umar/frontend
+          git remote set-url origin git@github.com:umarrfarooooq/ci-cd-frontend.git
           git pull origin main
           npm install
           npm run build
